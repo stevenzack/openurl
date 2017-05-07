@@ -12,10 +12,10 @@ golang package for opening URLs in default web browser.
 import (
   ...
 
-  "github.com/darkowlzz/openurl"
+  "github.com/stevenzack/openurl"
 )
 
-if err := openurl.Open("http://example.com"); err != nil {
+if err := openurl.Open("example.com"); err != nil {
   log.Fatal(err)
 }
 ```  

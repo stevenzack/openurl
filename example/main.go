@@ -1,13 +1,13 @@
 package main
 
 import (
-  "log"
+	"log"
 
-  "github.com/darkowlzz/openurl"
+	"github.com/stevenzack/openurl"
 )
 
 func main() {
-  if err := openurl.Open("http://example.com"); err != nil {
-    log.Fatal(err)
-  }
+	if err := openurl.Open("google.com"); err != nil {
+		log.Fatal(err)
+	}
 }
