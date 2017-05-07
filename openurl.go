@@ -23,7 +23,10 @@ func Open(url string) error {
 		if _, err := os.Stat("\"C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Google Chrome\""); !os.IsNotExist(err) { //Chrome  installed on this computer
 			file, _ := os.Create("./openurl.bat")
 			file.WriteString("\"C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\Google Chrome.lnk\" --app=" + url)
-			defer os.Remove("./openurl.bat")
+			defer func() {
+				file.Close()
+				os.Remove("./openurl.bat")
+			}()
 			cmd := exec.Command(".\\openurl.bat")
 			return cmd.Start()
 		}
