@@ -30,22 +30,23 @@ func Open(url string) error {
 		return exec.Command("explorer", url).Run()
 
 	case "darwin":
-		if err := exec.Command("google-chrome", "--app="+url); err != nil {
-			if err := exec.Command("google-chrome-stable", "--app="+url); err != nil {
-				if err := exec.Command("chromium", "--app="+url); err != nil {
+		if err := exec.Command("google-chrome", "--app="+url).Run(); err != nil {
+			if err := exec.Command("google-chrome-stable", "--app="+url).Run(); err != nil {
+				if err := exec.Command("chromium", "--app="+url).Run(); err != nil {
 					return exec.Command("open", url).Run()
 				}
 			}
 		}
 		return nil
 	case "linux":
-		if err := exec.Command("google-chrome", "--app="+url); err != nil {
-			if err := exec.Command("google-chrome-stable", "--app="+url); err != nil {
-				if err := exec.Command("chromium", "--app="+url); err != nil {
+		if err := exec.Command("google-chrome", "--app="+url).Run(); err != nil {
+			if err := exec.Command("google-chrome-stable", "--app="+url).Run(); err != nil {
+				if err := exec.Command("chromium", "--app="+url).Run(); err != nil {
 					return exec.Command("xdg-open", url).Run()
 				}
 			}
 		}
+		f.Println(url)
 		return nil
 	}
 	return unsupportedPlatformError
