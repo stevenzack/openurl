@@ -22,7 +22,7 @@ func Open(url string) error {
 	case "windows":
 		if _, err := os.Stat("\"C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Google Chrome\""); !os.IsNotExist(err) { //Chrome  installed on this computer
 			file, _ := os.Create("./openurl.bat")
-			file.WriteString("\"C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\Google Chrome.lnk\" --app=http://" + url)
+			file.WriteString("\"C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\Google Chrome.lnk\" --app=" + url)
 			file.Close()
 			cmd := exec.Command(".\\openurl.bat")
 			return cmd.Run()
@@ -30,18 +30,18 @@ func Open(url string) error {
 		return exec.Command("explorer", url).Run()
 
 	case "darwin":
-		if err := exec.Command("google-chrome", "--app=http://"+url); err != nil {
-			if err := exec.Command("google-chrome-stable", "--app=http://"+url); err != nil {
-				if err := exec.Command("chromium", "--app=http://"+url); err != nil {
+		if err := exec.Command("google-chrome", "--app="+url); err != nil {
+			if err := exec.Command("google-chrome-stable", "--app="+url); err != nil {
+				if err := exec.Command("chromium", "--app="+url); err != nil {
 					return exec.Command("open", url).Run()
 				}
 			}
 		}
 		return nil
 	case "linux":
-		if err := exec.Command("google-chrome", "--app=http://"+url); err != nil {
-			if err := exec.Command("google-chrome-stable", "--app=http://"+url); err != nil {
-				if err := exec.Command("chromium", "--app=http://"+url); err != nil {
+		if err := exec.Command("google-chrome", "--app="+url); err != nil {
+			if err := exec.Command("google-chrome-stable", "--app="+url); err != nil {
+				if err := exec.Command("chromium", "--app="+url); err != nil {
 					return exec.Command("xdg-open", url).Run()
 				}
 			}
