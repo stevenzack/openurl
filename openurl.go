@@ -2,6 +2,7 @@ package openurl
 
 import (
 	"errors"
+	"os"
 	"os/exec"
 	"runtime"
 )
@@ -20,29 +21,28 @@ func Open(url string) error {
 			file.WriteString("\"C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\Google Chrome.lnk\" --app=http://" + url)
 			file.Close()
 			cmd := exec.Command(".\\openurl.bat")
-			if err := cmd.Run(); err != nil {
-				return err
-			}
-		} else { //no chrome
-			exec.Command("explorer", url).Run()
+			return cmd.Run()
 		}
+		return exec.Command("explorer", url).Run()
+
 	case "darwin":
 		if err := exec.Command("google-chrome", "--app=http://"+url); err != nil {
 			if err := exec.Command("google-chrome-stable", "--app=http://"+url); err != nil {
 				if err := exec.Command("chromium", "--app=http://"+url); err != nil {
-					return exec.Command("open", url)
+					return exec.Command("open", url).Run()
 				}
 			}
 		}
+		return nil
 	case "linux":
 		if err := exec.Command("google-chrome", "--app=http://"+url); err != nil {
 			if err := exec.Command("google-chrome-stable", "--app=http://"+url); err != nil {
 				if err := exec.Command("chromium", "--app=http://"+url); err != nil {
-					return exec.Command("xdg-open", url)
+					return exec.Command("xdg-open", url).Run()
 				}
 			}
 		}
-	default:
-		return "", unsupportedPlatformError
+		return nil
 	}
+	return unsupportedPlatformError
 }
