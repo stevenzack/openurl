@@ -2,7 +2,7 @@ package openurl
 
 import (
 	"errors"
-	"os"
+	//"os"
 	"os/exec"
 	"runtime"
 	"strings"
