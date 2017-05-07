@@ -46,7 +46,6 @@ func Open(url string) error {
 				}
 			}
 		}
-		f.Println(url)
 		return nil
 	}
 	return unsupportedPlatformError
