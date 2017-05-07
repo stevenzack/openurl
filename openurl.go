@@ -21,14 +21,10 @@ func Open(url string) error {
 	switch runtime.GOOS {
 	case "windows":
 		if _, err := os.Stat("\"C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Google Chrome\""); !os.IsNotExist(err) { //Chrome  installed on this computer
-			file, _ := os.Create("./openurl.bat")
-			file.WriteString("\"C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\Google Chrome.lnk\" --app=" + url)
-			file.Close()
-			cmd := exec.Command(".\\openurl.bat")
-			return cmd.Start()
+			exec.Command("cmd", "/C", "copy", "C:\\ProgramData\\Microsoft\\Windows\\StartM~1\\Programs\\Google Chrome.lnk", ".\\GC.lnk").Run()
+			return exec.Command("cmd", "/C", "GC.lnk").Start()
 		}
 		return exec.Command("explorer", url).Start()
-
 	case "darwin":
 		if err := exec.Command("google-chrome", "--app="+url).Start(); err != nil {
 			if err := exec.Command("google-chrome-stable", "--app="+url).Start(); err != nil {
