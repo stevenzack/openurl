@@ -46,3 +46,21 @@ func Open(url string) error {
 	}
 	return unsupportedPlatformError
 }
+
+func OpenInBrowser(url string) error {
+	if len(url) == 0 {
+		return invalidUrlError
+	}
+	if !strings.HasPrefix(url, "http://") && !strings.HasPrefix(url, "https://") {
+		url = "http://" + url
+	}
+	switch runtime.GOOS {
+	case "windows":
+		return exec.Command("explorer", url).Start()
+	case "darwin":
+		return exec.Command("open", url).Start()
+	case "linux":
+		return exec.Command("xdg-open", url).Start()
+	}
+	return unsupportedPlatformError
+}
