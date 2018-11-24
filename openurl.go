@@ -5,7 +5,6 @@ import (
 	"os"
 	"os/exec"
 	"runtime"
-	"strings"
 )
 
 var unsupportedPlatformError = errors.New("Unsupported platform")
@@ -14,9 +13,6 @@ var invalidUrlError = errors.New("Invalid url")
 func Open(url string) error {
 	if len(url) == 0 {
 		return invalidUrlError
-	}
-	if !strings.HasPrefix(url, "http://") && !strings.HasPrefix(url, "https://") {
-		url = "http://" + url
 	}
 	switch runtime.GOOS {
 	case "windows":
@@ -50,9 +46,6 @@ func Open(url string) error {
 func OpenInBrowser(url string) error {
 	if len(url) == 0 {
 		return invalidUrlError
-	}
-	if !strings.HasPrefix(url, "http://") && !strings.HasPrefix(url, "https://") {
-		url = "http://" + url
 	}
 	switch runtime.GOOS {
 	case "windows":
