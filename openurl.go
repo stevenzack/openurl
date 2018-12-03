@@ -57,3 +57,6 @@ func OpenInBrowser(url string) error {
 	}
 	return unsupportedPlatformError
 }
+func OpenURL(url string) error {
+	return OpenInBrowser(url)
+}
