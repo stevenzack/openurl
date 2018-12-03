@@ -10,7 +10,7 @@ import (
 var unsupportedPlatformError = errors.New("Unsupported platform")
 var invalidUrlError = errors.New("Invalid url")
 
-func Open(url string) error {
+func OpenApp(url string) error {
 	if len(url) == 0 {
 		return invalidUrlError
 	}
@@ -43,7 +43,7 @@ func Open(url string) error {
 	return unsupportedPlatformError
 }
 
-func OpenInBrowser(url string) error {
+func Open(url string) error {
 	if len(url) == 0 {
 		return invalidUrlError
 	}
@@ -56,7 +56,4 @@ func OpenInBrowser(url string) error {
 		return exec.Command("xdg-open", url).Start()
 	}
 	return unsupportedPlatformError
-}
-func OpenURL(url string) error {
-	return OpenInBrowser(url)
 }
