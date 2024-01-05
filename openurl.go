@@ -2,6 +2,7 @@ package openurl
 
 import (
 	"errors"
+	"os"
 	"os/exec"
 	"runtime"
 )
@@ -37,4 +38,12 @@ func Open(url string) error {
 		return exec.Command("xdg-open", url).Start()
 	}
 	return unsupportedPlatformError
+}
+
+func runAttachedCmd(cmd string, args ...string) error {
+	c := exec.Command(cmd, args...)
+	c.Stdout = os.Stdout
+	c.Stdin = os.Stdin
+	c.Stderr = os.Stderr
+	return c.Run()
 }
